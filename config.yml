@@ -1,16 +1,14 @@
 version: 1
 accounts:
 - name: alice
-  coins: [ 200000000kii ]
+  coins: [ 200000000000ukii ]
 - name: bob
-  coins: [ 200000000kii ]
+  coins: [ 200000000000ukii ]
 - name: test
-  coins: [ 200000000kii ]
-  mnemonic: tornado since dog input promote pottery affair debris security reform
-    glance taste
+  coins: [ 200000000000ukii ]
 faucet:
   name: bob
-  coins: [ 200000000kii ]
+  coins: [ 200000000000ukii ]
 client:
   typescript:
     path: ts-client
@@ -22,7 +20,7 @@ genesis:
   app_state:
     staking:
       params:
-        bond_denom: kii
+        bond_denom: ukii
 validators:
 - name: test
-  bonded: 100000000kii
+  bonded: 100000000000ukii
