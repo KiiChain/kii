@@ -17,7 +17,7 @@ ignite chain serve -r -v
 **NOTE** The recursive flag is optional if you want to get the frontend projects.
 **NOTE 2** if you would like to pull all updates including the submodules use this command:
 
-git pull && git submodule foreach git pull origin master
+git pull origin master && git submodule foreach git pull origin main
 ```
 
 ### Configure
