@@ -1,21 +1,28 @@
 version: 1
 accounts:
 - name: alice
-  coins:
-  - 20000token
-  - 200000000stake
+  coins: [ 200000000kii ]
 - name: bob
-  coins:
-  - 10000token
-  - 100000000stake
-client:
-  openapi:
-    path: docs/static/openapi.yml
+  coins: [ 200000000kii ]
+- name: test
+  coins: [ 200000000kii ]
+  mnemonic: tornado since dog input promote pottery affair debris security reform
+    glance taste
 faucet:
   name: bob
-  coins:
-  - 5token
-  - 100000stake
+  coins: [ 200000000kii ]
+client:
+  typescript:
+    path: ts-client
+  hooks:
+    path: kii-web/src/hooks
+  openapi:
+    path: docs/static/openapi.yml
+genesis:
+  app_state:
+    staking:
+      params:
+        bond_denom: kii
 validators:
-- name: alice
-  bonded: 100000000stake
+- name: test
+  bonded: 100000000kii

@@ -1,0 +1,6 @@
+[submodule "kii-explorer"]
+	path = kii-explorer
+	url = https://github.com/KiiBlockchain/kii-explorer.git
+[submodule "kii-web"]
+	path = kii-web
+	url = https://github.com/KiiBlockchain/kii-web.git
