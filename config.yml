@@ -1,26 +1,26 @@
 version: 1
 accounts:
-- name: alice
+- name: kii1
   coins: [ 200000000000ukii ]
-- name: bob
+- name: kii2
   coins: [ 200000000000ukii ]
-- name: test
+- name: kii3
   coins: [ 200000000000ukii ]
 faucet:
-  name: bob
+  name: kii1
   coins: [ 200000000000ukii ]
-client:
-  typescript:
-    path: ts-client
-  hooks:
-    path: kii-web/src/hooks
-  openapi:
-    path: docs/static/openapi.yml
 genesis:
   app_state:
     staking:
       params:
         bond_denom: ukii
 validators:
-- name: test
+- name: kii1
   bonded: 100000000000ukii
+  home: "~/.kiichain"
+  app:
+    pruning: "nothing"
+  config:
+    moniker: "kiiventador-1"
+  client:
+    output: "json"
