@@ -2,13 +2,10 @@ version: 1
 accounts:
 - name: kii1
   coins: [ 300000000000000ukii ]
-  mnemonic: code save horse pole space deputy genuine fence video nominee era tackle knock message sing breeze sing fiscal view arena stomach gift parrot multiply 
 - name: kii2
   coins: [ 100000000000000ukii ]
-  mnemonic: hole canyon sunset dawn smooth air prison dry man minute gossip canal joke liberty agent print used any banner split indoor empower day canoe
 - name: kii3
   coins: [ 100000000000ukii ]
-  mnemonic: depart theme spawn cheap bomb answer junior hurdle energy sell lawn maple economy zoo grain nothing scale whip proof practice stereo two canal immense
 faucet:
   name: kii1
   coins: [ 100000000000000ukii ]
@@ -20,7 +17,7 @@ genesis:
 validators:
 - name: kii1
   bonded: 100000000000ukii
-  home: "~/.kiichain"
+  home: "~/.kiiventador"
   app:
     pruning: "nothing"
   config:
