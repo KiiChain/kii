@@ -1,5 +1,0 @@
-broadcast-mode = "sync"
-chain-id = "kiichain"
-keyring-backend = "test"
-node = "tcp://localhost:26657"
-output = "json"
