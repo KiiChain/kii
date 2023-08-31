@@ -1,17 +1,17 @@
 version: 1
 accounts:
 - name: kii1
-  coins: [ 200000000000ukii ]
-  mnemonic: shine pledge alert isolate together fee hurry canal admit athlete cotton another fiction caught dutch system world pear candy street dream sudden reflect embark 
+  coins: [ 300000000000000ukii ]
+  mnemonic: code save horse pole space deputy genuine fence video nominee era tackle knock message sing breeze sing fiscal view arena stomach gift parrot multiply 
 - name: kii2
-  coins: [ 200000000000ukii ]
-  mnemonic: thrive energy lumber bar midnight fee someone frame code jelly cram belt palm sail shy among help inspire deny suffer mercy struggle more return     
+  coins: [ 100000000000000ukii ]
+  mnemonic: hole canyon sunset dawn smooth air prison dry man minute gossip canal joke liberty agent print used any banner split indoor empower day canoe
 - name: kii3
-  coins: [ 200000000000ukii ]
-  mnemonic: print rigid weekend mixture web try alley usual swamp boy tree define obvious excite sponsor sheriff cave find nut woman garment few crowd cram
+  coins: [ 100000000000ukii ]
+  mnemonic: depart theme spawn cheap bomb answer junior hurdle energy sell lawn maple economy zoo grain nothing scale whip proof practice stereo two canal immense
 faucet:
   name: kii1
-  coins: [ 200000000000ukii ]
+  coins: [ 100000000000000ukii ]
 genesis:
   app_state:
     staking:
