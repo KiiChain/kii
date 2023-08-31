@@ -5,11 +5,12 @@ accounts:
 - name: kii2
   coins: [ 100000000000000ukii ]
 - name: kii3
-  coins: [ 100000000000ukii ]
+  coins: [ 100000000000000ukii ]
 faucet:
   name: kii1
   coins: [ 100000000000000ukii ]
 genesis:
+  chain_id: kiiventador
   app_state:
     staking:
       params:
@@ -17,7 +18,6 @@ genesis:
 validators:
 - name: kii1
   bonded: 100000000000ukii
-  home: "~/.kiiventador"
   app:
     pruning: "nothing"
   config:
