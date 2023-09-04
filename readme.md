@@ -74,7 +74,7 @@ kiichaind tx staking create-validator \
   --commission-max-change-rate=0.01 \
   --min-self-delegation=1 \
   --gas=auto --gas-adjustment=1.2 \
-  --gas-prices=0.01bnt \
+  --gas-prices=0.01ukii \
   --from your_wallet_name_in_config_yml
 ```
 
