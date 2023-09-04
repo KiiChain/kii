@@ -5,19 +5,88 @@
 ```
 Node 18+
 Go 1.19
+bison (on the OS level)
+build-essential (on the OS level)
+jq (on the OS level)
 Ignite CLI (https://docs.ignite.com/welcome/install)
 ```
-## Run KII Chain Locally
+## Run KII Node for Testnet
+```shell
+> git clone https://github.com/KiiBlockchain/kii.git
+> cd kii
+> nano config.yml
+```
+
+```yaml
+//customize the config.yml similar to below
+version: 1
+accounts:
+- name: name_of_your_wallet_account
+  coins: [ 100ukii ] // this doesn't matter, but a value is needed for now
+genesis:
+  chain_id: kiiventador
+  app_state:
+    staking:
+      params:
+        bond_denom: ukii
+validators:
+- name: name_of_your_wallet_account
+  bonded: 100ukii // this doesn't matter, but a vale is needed for now
+  app:
+    pruning: "nothing"
+  config:
+    moniker: "name_of_your_validator"
+  client:
+    output: "json"
+```
+
+```shell
+> ignite chain init
+// copy the mnemonic phrases and the address (long string with prefix "kii") from the output and make a note of that later
+> cp genesis/genesis.json /home/ubuntu/.kiichain/config/genesis.json
+> nano /home/ubuntu/.kiichain/config/config.toml
+```
+
+```toml
+// search for persistent_peers = ""
+// replace it with persistent_peers = "ff2b45f7f3b39d934d9f7bb3e88f9860cfe68d41@3.129.207.228:26656"
+// save the file
+```
+
+```shell
+> kiichaind start
+```
+
+## Convert node to validator
+Once you have the node running with the above instructions, you need to broadcast a transaction on the chain signaling you want to be a validator node.  To become a validator, you will need to have a minimum stake of 1 ukii.
+
+Reach out to the Kii Team on discord and request for some test ukii tokens sent to your address (the generated address from the previous step).
+
+Once you have the tokens in your address, in a separate terminal on the machine you're running your node on, execute the following command:
 
 ```
-git clone --recurse-submodules -j8 https://github.com/KiiBlockchain/kii.git
+kiichaind tx staking create-validator \
+  --amount=1ukii \
+  --pubkey=$(kiichaind tendermint show-validator) \
+  --moniker=your_validator_name \
+  --commission-rate=0.1 \
+  --commission-max-rate=0.2 \
+  --commission-max-change-rate=0.01 \
+  --min-self-delegation=1 \
+  --gas=auto --gas-adjustment=1.2 \
+  --gas-prices=0.01bnt \
+  --from your_wallet_name_in_config_yml
+```
+
+Once the command is broadcasted successfully, the node should now be classified as a validator.
+
+## Run KII Chain Node Locally
+
+```
+git clone https://github.com/KiiBlockchain/kii.git
 cd kii
-ignite chain serve -r -v
-
-**NOTE** The recursive flag is optional if you want to get the frontend projects.
-**NOTE 2** if you would like to pull all updates including the submodules use this command:
-
-git pull origin master && git submodule foreach git pull origin main
+**customize the config.yml**
+ignite chain serve -r
 ```
 
 ### Configure
