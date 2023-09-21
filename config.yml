@@ -1,11 +1,7 @@
 version: 1
 accounts:
 - name: kii1
-  coins: [ 300000000000000ukii ]
-- name: kii2
-  coins: [ 100000000000000ukii ]
-- name: kii3
-  coins: [ 100000000000000ukii ]
+  coins: [ 500000000000000ukii ]
 faucet:
   name: kii1
   coins: [ 100000000000000ukii ]
@@ -19,7 +15,7 @@ validators:
 - name: kii1
   bonded: 100000000000ukii
   app:
-    pruning: "nothing"
+    pruning: "default"
   config:
     moniker: "kiiventador-1"
   client:
