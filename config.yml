@@ -1,26 +1,35 @@
 version: 1
 accounts:
-- name: kii1
+- name: kiitest
   coins: [ 300000000000000ukii ]
-- name: kii2
-  coins: [ 100000000000000ukii ]
-- name: kii3
-  coins: [ 100000000000000ukii ]
-faucet:
-  name: kii1
-  coins: [ 100000000000000ukii ]
 genesis:
   chain_id: kiiventador
   app_state:
+    crisis:
+      constant_fee:
+        denom: ukii
+    gov:
+      deposit_params:
+        min_deposit:
+          - amount: "1000000"
+            denom: ukii
+    mint:
+      minter:
+        inflation: "0.0"
+      params:
+        inflation_max: "0.0"
+        inflation_min: "0.0"
+        inflation_rate_change: "0.0"
+        mint_denom: ukii
     staking:
       params:
         bond_denom: ukii
 validators:
-- name: kii1
+- name: kiitest
   bonded: 100000000000ukii
   app:
     pruning: "nothing"
   config:
-    moniker: "kiiventador-1"
+    moniker: "kiiventador-test"
   client:
     output: "json"
