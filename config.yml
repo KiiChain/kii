@@ -28,11 +28,11 @@ genesis:
       params:
         bond_denom: ukii
 validators:
-- name: kiitest
+- name: kii1
   bonded: 100000000000ukii
   app:
     pruning: "default"
   config:
-    moniker: "kiiventador-test"
+    moniker: "kiiventador-1"
   client:
     output: "json"
