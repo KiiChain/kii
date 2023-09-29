@@ -1,7 +1,10 @@
 version: 1
 accounts:
-- name: kiitest
-  coins: [ 300000000000000ukii ]
+- name: kii1
+  coins: [ 500000000000000ukii ]
+faucet:
+  name: kii1
+  coins: [ 100000000000000ukii ]
 genesis:
   chain_id: kiiventador
   app_state:
@@ -28,7 +31,7 @@ validators:
 - name: kiitest
   bonded: 100000000000ukii
   app:
-    pruning: "nothing"
+    pruning: "default"
   config:
     moniker: "kiiventador-test"
   client:

@@ -1,5 +1,5 @@
 {
-  "genesis_time": "2023-08-31T21:40:13.643122158Z",
+  "genesis_time": "2023-09-28T00:41:17.525027315Z",
   "chain_id": "kiiventador",
   "initial_height": "1",
   "consensus_params": {
@@ -36,23 +36,9 @@
       "accounts": [
         {
           "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "kii1xae03pwmvd6f3qxtl5gjznw55d0e6j53p6saqz",
+          "address": "kii1jfvu36ezctth8vy787d35tqwge9feg8tfkz4gd",
           "pub_key": null,
           "account_number": "0",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "kii1mqhfq425qzgxmtt5lweqvh0xvesd8hruztkr9t",
-          "pub_key": null,
-          "account_number": "1",
-          "sequence": "0"
-        },
-        {
-          "@type": "/cosmos.auth.v1beta1.BaseAccount",
-          "address": "kii19hacykkuv35dhsg6xs4fhdy4mjmef0v3wwldwl",
-          "pub_key": null,
-          "account_number": "2",
           "sequence": "0"
         }
       ]
@@ -67,29 +53,11 @@
       },
       "balances": [
         {
-          "address": "kii19hacykkuv35dhsg6xs4fhdy4mjmef0v3wwldwl",
+          "address": "kii1jfvu36ezctth8vy787d35tqwge9feg8tfkz4gd",
           "coins": [
             {
               "denom": "ukii",
-              "amount": "100000000000000"
-            }
-          ]
-        },
-        {
-          "address": "kii1xae03pwmvd6f3qxtl5gjznw55d0e6j53p6saqz",
-          "coins": [
-            {
-              "denom": "ukii",
-              "amount": "300000000000000"
-            }
-          ]
-        },
-        {
-          "address": "kii1mqhfq425qzgxmtt5lweqvh0xvesd8hruztkr9t",
-          "coins": [
-            {
-              "denom": "ukii",
-              "amount": "100000000000000"
+              "amount": "500000000000000"
             }
           ]
         }
@@ -106,7 +74,7 @@
     "crisis": {
       "constant_fee": {
         "amount": "1000",
-        "denom": "stake"
+        "denom": "ukii"
       }
     },
     "distribution": {
@@ -154,11 +122,11 @@
                   "max_change_rate": "0.010000000000000000"
                 },
                 "min_self_delegation": "1",
-                "delegator_address": "kii1xae03pwmvd6f3qxtl5gjznw55d0e6j53p6saqz",
-                "validator_address": "kiivaloper1xae03pwmvd6f3qxtl5gjznw55d0e6j535vtwpk",
+                "delegator_address": "kii1jfvu36ezctth8vy787d35tqwge9feg8tfkz4gd",
+                "validator_address": "kiivaloper1jfvu36ezctth8vy787d35tqwge9feg8tuqexfe",
                 "pubkey": {
                   "@type": "/cosmos.crypto.ed25519.PubKey",
-                  "key": "+5hgIDpHVS5zlplvnn0QK4DihSteb3I6jyvlesbgiuc="
+                  "key": "rS8nEQRNaQ3n7LITjiA4hKatJSBxc1s7ExLBKMIx7HA="
                 },
                 "value": {
                   "denom": "ukii",
@@ -166,7 +134,7 @@
                 }
               }
             ],
-            "memo": "ff2b45f7f3b39d934d9f7bb3e88f9860cfe68d41@172.31.28.43:26656",
+            "memo": "53b97c25dd1526d53e869d5854cf53448214c0ea@172.31.28.43:26656",
             "timeout_height": "0",
             "extension_options": [],
             "non_critical_extension_options": []
@@ -176,7 +144,7 @@
               {
                 "public_key": {
                   "@type": "/cosmos.crypto.secp256k1.PubKey",
-                  "key": "Ai7jzAAWc4vxliv6Qe9nMhrWr19f9kg3qXmJXntXTvJ0"
+                  "key": "As2BkVDrHJzHZr/ro9GvAodg5DSFGd/r2bIV/YfE/J5+"
                 },
                 "mode_info": {
                   "single": {
@@ -195,7 +163,7 @@
             "tip": null
           },
           "signatures": [
-            "8JDnarEi0y1TFx4Rs2CEdELrKfqrcc7k8+fKRL8euhZbYvkBMzQxZ1ainChWl5+QCGMxXVl6IMvRtN+3DvwVRA=="
+            "V8XnFUYQPBfz/4Hli6VefGnFsLDgRVk4Qj2JR+/rU2kqrjrJVE2NNEiAgIi4tzf0MIf/6tEAf2K9aVpTb4HchQ=="
           ]
         }
       ]
@@ -211,7 +179,7 @@
         "min_deposit": [
           {
             "amount": "10000000",
-            "denom": "stake"
+            "denom": "ukii"
           }
         ],
         "min_initial_deposit_ratio": "0.000000000000000000",
@@ -305,7 +273,7 @@
         "inflation_max": "0.200000000000000000",
         "inflation_min": "0.070000000000000000",
         "inflation_rate_change": "0.130000000000000000",
-        "mint_denom": "stake"
+        "mint_denom": "ukii"
       }
     },
     "params": null,
