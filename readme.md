@@ -58,24 +58,24 @@ validators:
 ```
 
 ## Convert node to validator
-Once you have the node running with the above instructions, you need to broadcast a transaction on the chain signaling you want to be a validator node.  To become a validator, you will need to have a minimum stake of 1 ukii.
+Once you have the node running with the above instructions, you need to broadcast a transaction on the chain signaling you want to be a validator node.  To become a validator, you will need to have a minimum stake of 1 tkii.
 
-Reach out to the Kii Team on discord and request for some test ukii tokens sent to your address (the generated address from the previous step).
+Reach out to the Kii Team on discord and request for some test tkii tokens sent to your address (the generated address from the previous step).
 
 Once you have the tokens in your address, in a separate terminal on the machine you're running your node on, execute the following command:
 
 ```
 kiichaind tx staking create-validator \
-  --amount=1ukii \
+  --amount=1000000000000tkii \
   --pubkey=$(kiichaind tendermint show-validator) \
-  --moniker=your_validator_name \
+  --moniker="KiiFerari458" \
   --commission-rate=0.1 \
   --commission-max-rate=0.2 \
   --commission-max-change-rate=0.01 \
-  --min-self-delegation=1 \
+  --min-self-delegation=1000000000 \
   --gas=auto --gas-adjustment=1.2 \
-  --gas-prices=0.01ukii \
-  --from your_wallet_name_in_config_yml
+  --gas-prices=0.0000001kii \
+  --from kiiferrari458wallet
 ```
 
 Once the command is broadcasted successfully, the node should now be classified as a validator.
