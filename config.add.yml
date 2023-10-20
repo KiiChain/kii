@@ -1,0 +1,37 @@
+version: 1
+accounts:
+# - name: kiiferrari458wallet
+#   coins: [ 1000000000000tkii ]
+#   mnemonic: 
+# - name: kiiuruswallet
+#   coins: [ 1000000000000tkii ]
+#   mnemonic:
+# - name: kiipaganiwallet
+#   coins: [ 1000000000000tkii ]
+#   mnemonic: 
+genesis:
+  chain_id: kiiventador
+  app_state:
+    crisis:
+      constant_fee:
+        denom: tkii
+    mint:
+      minter:
+        inflation: "0.0"
+      params:
+        inflation_max: "0.0"
+        inflation_min: "0.0"
+        inflation_rate_change: "0.0"
+        mint_denom: tkii
+    staking:
+      params:
+        bond_denom: tkii
+validators:
+- name: kiiventadorwallet
+  bonded: 100000000000tkii
+  app:
+    pruning: "default"
+  config:
+    moniker: "KiiAventador"
+  client:
+    output: "json"

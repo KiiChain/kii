@@ -9,9 +9,17 @@ accounts:
 - name: community_development
   coins: [ 180000000000000tkii ]
 - name: team
-  coins: [ 360000000000000tkii ]
+  coins: [ 359000000000000tkii ]
 - name: rewards
   coins: [ 900000000000000tkii ]
+- name: kiiventadorwallet
+  coins: [ 1000000000000tkii ]
+- name: kiiferrari458wallet
+  coins: [ 1000000000000tkii ]
+- name: kiiuruswallet
+  coins: [ 1000000000000tkii ]
+- name: kiipaganiwallet
+  coins: [ 1000000000000tkii ]
 genesis:
   chain_id: kiiventador
   app_state:
@@ -30,7 +38,7 @@ genesis:
       params:
         bond_denom: tkii
 validators:
-- name: KiiAventador
+- name: kiiventadorwallet
   bonded: 100000000000tkii
   app:
     pruning: "default"
