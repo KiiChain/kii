@@ -43,13 +43,14 @@ validators:
 ```shell
 > ignite chain init
 // copy the mnemonic phrases and the address (long string with prefix "kii") from the output and make a note of that later
+cp /home/ubuntu/.kiichain/config/genesis.json genesis/genesis.json
 > cp genesis/genesis.json /home/ubuntu/.kiichain/config/genesis.json
 > nano /home/ubuntu/.kiichain/config/config.toml
 ```
 
 ```toml
 // search for persistent_peers = ""
-// replace it with persistent_peers = "10dd37b81bb4471bf20b7f813139e994cf2fcac0@3.129.207.228:26656"
+// replace it with persistent_peers = "ad4379b36ab6e13fc2604d9d4de9e280385141a1@3.129.207.228:26656"
 // save the file
 ```
 
@@ -58,24 +59,24 @@ validators:
 ```
 
 ## Convert node to validator
-Once you have the node running with the above instructions, you need to broadcast a transaction on the chain signaling you want to be a validator node.  To become a validator, you will need to have a minimum stake of 1 tkii.
+Once you have the node running with the above instructions, you need to broadcast a transaction on the chain signaling you want to be a validator node.  To become a validator, you will need to have a minimum stake of 1 ukii.
 
-Reach out to the Kii Team on discord and request for some test tkii tokens sent to your address (the generated address from the previous step).
+Reach out to the Kii Team on discord and request for some test ukii tokens sent to your address (the generated address from the previous step).
 
 Once you have the tokens in your address, in a separate terminal on the machine you're running your node on, execute the following command:
 
 ```
 kiichaind tx staking create-validator \
-  --amount=1000000000000tkii \
+  --amount=1tkii \
   --pubkey=$(kiichaind tendermint show-validator) \
-  --moniker="KiiFerari458" \
+  --moniker="KiiPagani" \
   --commission-rate=0.1 \
   --commission-max-rate=0.2 \
   --commission-max-change-rate=0.01 \
-  --min-self-delegation=1000000000 \
+  --min-self-delegation=1 \
   --gas=auto --gas-adjustment=1.2 \
-  --gas-prices=0.0000001kii \
-  --from kiiferrari458wallet
+  --gas-prices=0.01tkii \
+  --from kiipaganiwallet
 ```
 
 Once the command is broadcasted successfully, the node should now be classified as a validator.
