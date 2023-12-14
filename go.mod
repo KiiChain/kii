@@ -20,6 +20,7 @@ require (
 	google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4
 	google.golang.org/grpc v1.55.0
 	gopkg.in/yaml.v2 v2.4.0
+	github.com/evmos/ethermint v0.21.0
 )
 
 require (
@@ -165,4 +166,19 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
+replace (
+	// Use the cosmos keyring code
+	github.com/99designs/keyring => github.com/cosmos/keyring v1.2.0
+	// See https://github.com/cosmos/cosmos-sdk/pull/13093
+	github.com/dgrijalva/jwt-go => github.com/golang-jwt/jwt/v4 v4.4.2
+	// Use ethermint fork that respects min-gas-price with NoBaseFee true and london enabled, and includes eip712 support
+	github.com/evmos/ethermint => github.com/kava-labs/ethermint v0.21.0-kava-v23-1
+	// See https://github.com/cosmos/cosmos-sdk/pull/10401, https://github.com/cosmos/cosmos-sdk/commit/0592ba6158cd0bf49d894be1cef4faeec59e8320
+	github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.7.0
+	// Use the cosmos modified protobufs
+	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
+	// Downgraded to avoid bugs in following commits which causes "version does not exist" errors
+	github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
+	// Use cometbft fork of tendermint
+	github.com/tendermint/tendermint => github.com/kava-labs/cometbft v0.34.27-kava.0
+)

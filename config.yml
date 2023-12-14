@@ -1,9 +1,9 @@
 version: 1
 accounts:
 - name: private_sale
-  coins: [ 36000000000000tkii ]
+  coins: [ 54000000000000tkii ]
 - name: public_sale
-  coins: [ 144000000000000tkii ]
+  coins: [ 126000000000000tkii ]
 - name: liquidity
   coins: [ 180000000000000tkii ]
 - name: community_development

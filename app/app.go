@@ -7,6 +7,10 @@ import (
 	"os"
 	"path/filepath"
 
+	evmutil "kiichain/x/evmutil"
+	evmutilkeeper "kiichain/x/evmutil/keeper"
+	evmutiltypes "kiichain/x/evmutil/types"
+
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 	reflectionv1 "cosmossdk.io/api/cosmos/reflection/v1"
 	dbm "github.com/cometbft/cometbft-db"
@@ -108,11 +112,20 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v7/modules/core/keeper"
 	solomachine "github.com/cosmos/ibc-go/v7/modules/light-clients/06-solomachine"
 	ibctm "github.com/cosmos/ibc-go/v7/modules/light-clients/07-tendermint"
+	ethermintconfig "github.com/evmos/ethermint/server/config"
+	"github.com/evmos/ethermint/x/evm"
+	evmkeeper "github.com/evmos/ethermint/x/evm/keeper"
+	evmtypes "github.com/evmos/ethermint/x/evm/types"
+	"github.com/evmos/ethermint/x/evm/vm/geth"
+	"github.com/evmos/ethermint/x/feemarket"
+	feemarketkeeper "github.com/evmos/ethermint/x/feemarket/keeper"
+	feemarkettypes "github.com/evmos/ethermint/x/feemarket/types"
 	"github.com/spf13/cast"
 
 	kiichainmodule "kiichain/x/kiichain"
 	kiichainmodulekeeper "kiichain/x/kiichain/keeper"
 	kiichainmoduletypes "kiichain/x/kiichain/types"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "kiichain/app/params"
@@ -173,6 +186,9 @@ var (
 		ica.AppModuleBasic{},
 		vesting.AppModuleBasic{},
 		consensus.AppModuleBasic{},
+		evm.AppModuleBasic{},
+		evmutil.AppModuleBasic{},
+		feemarket.AppModuleBasic{},
 		kiichainmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
@@ -187,6 +203,8 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		evmtypes.ModuleName:            {authtypes.Minter, authtypes.Burner}, // used for secure addition and subtraction of balance using module account
+		evmutiltypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -203,6 +221,24 @@ func init() {
 	}
 
 	DefaultNodeHome = filepath.Join(userHomeDir, "."+Name)
+}
+
+// Options bundles several configuration params for an App.
+type Options struct {
+	SkipLoadLatest        bool
+	SkipUpgradeHeights    map[int64]bool
+	SkipGenesisInvariants bool
+	InvariantCheckPeriod  uint
+	MempoolEnableAuth     bool
+	MempoolAuthAddresses  []sdk.AccAddress
+	EVMTrace              string
+	EVMMaxGasWanted       uint64
+}
+
+// DefaultOptions is a sensible default Options value.
+var DefaultOptions = Options{
+	EVMTrace:        ethermintconfig.DefaultEVMTracer,
+	EVMMaxGasWanted: ethermintconfig.DefaultMaxTxGasWanted,
 }
 
 // App extends an ABCI application, but with most of its parameters exported.
@@ -228,6 +264,9 @@ type App struct {
 	AuthzKeeper           authzkeeper.Keeper
 	BankKeeper            bankkeeper.Keeper
 	CapabilityKeeper      *capabilitykeeper.Keeper
+	evmKeeper             *evmkeeper.Keeper
+	evmutilKeeper         evmutilkeeper.Keeper
+	feeMarketKeeper       feemarketkeeper.Keeper
 	StakingKeeper         *stakingkeeper.Keeper
 	SlashingKeeper        slashingkeeper.Keeper
 	MintKeeper            mintkeeper.Keeper
@@ -271,6 +310,7 @@ func New(
 	invCheckPeriod uint,
 	encodingConfig appparams.EncodingConfig,
 	appOpts servertypes.AppOptions,
+	options Options,
 	baseAppOptions ...func(*baseapp.BaseApp),
 ) *App {
 	appCodec := encodingConfig.Marshaler
@@ -296,10 +336,10 @@ func New(
 		govtypes.StoreKey, paramstypes.StoreKey, ibcexported.StoreKey, upgradetypes.StoreKey,
 		feegrant.StoreKey, evidencetypes.StoreKey, ibctransfertypes.StoreKey, icahosttypes.StoreKey,
 		capabilitytypes.StoreKey, group.StoreKey, icacontrollertypes.StoreKey, consensusparamtypes.StoreKey,
-		kiichainmoduletypes.StoreKey,
+		kiichainmoduletypes.StoreKey, evmtypes.StoreKey, evmutiltypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
-	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
+	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey, evmtypes.TransientKey)
 	memKeys := sdk.NewMemoryStoreKeys(capabilitytypes.MemStoreKey)
 
 	app := &App{
@@ -320,6 +360,10 @@ func New(
 		keys[paramstypes.StoreKey],
 		tkeys[paramstypes.TStoreKey],
 	)
+
+	feemarketSubspace := app.ParamsKeeper.Subspace(feemarkettypes.ModuleName)
+	evmSubspace := app.ParamsKeeper.Subspace(evmtypes.ModuleName)
+	evmutilSubspace := app.ParamsKeeper.Subspace(evmutiltypes.ModuleName)
 
 	// set the BaseApp's parameter store
 	app.ConsensusParamsKeeper = consensusparamkeeper.NewKeeper(appCodec, keys[upgradetypes.StoreKey], authtypes.NewModuleAddress(govtypes.ModuleName).String())
@@ -438,6 +482,36 @@ func New(
 	)
 
 	// ... other modules keepers
+
+	// Create Ethermint keepers
+	app.feeMarketKeeper = feemarketkeeper.NewKeeper(
+		appCodec,
+		"",
+		keys[feemarkettypes.StoreKey],
+		tkeys[feemarkettypes.TransientKey],
+		feemarketSubspace,
+	)
+
+	app.evmutilKeeper = evmutilkeeper.NewKeeper(
+		app.appCodec,
+		keys[evmutiltypes.StoreKey],
+		evmutilSubspace,
+		app.BankKeeper,
+		app.AccountKeeper,
+	)
+
+	evmBankKeeper := evmutilkeeper.NewEvmBankKeeper(app.evmutilKeeper, app.BankKeeper, app.AccountKeeper)
+	app.evmKeeper = evmkeeper.NewKeeper(
+		appCodec, keys[evmtypes.StoreKey], tkeys[evmtypes.TransientKey],
+		"",
+		app.AccountKeeper, evmBankKeeper, app.StakingKeeper, app.feeMarketKeeper,
+		nil, // precompiled contracts
+		geth.NewEVM,
+		options.EVMTrace,
+		evmSubspace,
+	)
+
+	app.evmutilKeeper.SetEvmKeeper(app.evmKeeper)
 
 	// Create IBC Keeper
 	app.IBCKeeper = ibckeeper.NewKeeper(
