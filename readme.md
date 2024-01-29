@@ -49,7 +49,7 @@ validators:
 
 ```toml
 // search for persistent_peers = ""
-// replace it with persistent_peers = "a65b111737b6542c0b506c72f01fc28b2dcd2db0@3.129.207.228:26656"
+// replace it with persistent_peers = "6468c58adc059d3c8fedfa0a4cceb47dcdd89d6a@3.129.207.228:26656"
 // save the file
 ```
 
