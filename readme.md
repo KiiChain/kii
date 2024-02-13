@@ -46,10 +46,21 @@ validators:
 > cp genesis/genesis.json /home/ubuntu/.kiichain/config/genesis.json
 > nano /home/ubuntu/.kiichain/config/config.toml
 ```
+## Retrieve Node ID Peer
+To connect to a peer on the network, you will need to get a peer's node id.  Any validator's node id that is connected to the network will do but if you don't have access to one, you can use one of KII's master node validator to connect to the network:
+
+Visit: https://a.testnet.kiivalidator.com:26658/status
+
+Extract the value from data object:
+```
+result.node_info.id
+```
+
+Then modify the config.toml file with the node id value
 
 ```toml
 // search for persistent_peers = ""
-// replace it with persistent_peers = "6468c58adc059d3c8fedfa0a4cceb47dcdd89d6a@3.129.207.228:26656"
+// replace it with persistent_peers = "<node id>@3.129.207.228:26656"
 // save the file
 ```
 
@@ -79,6 +90,12 @@ kiichaind tx staking create-validator \
 ```
 
 Once the command is broadcasted successfully, the node should now be classified as a validator.
+
+## Have your validator show up in the block explorer
+For your validator to show up on the block explorer: https://app.kiiglobal.io/kii/staking
+
+You will need to assign a domain name to your validator and ensure you enable HTTPS traffic for both port 1317 and 26657.
+See more information about setting up app.toml and config.toml here: https://github.com/ping-pub/explorer/blob/master/installation.md
 
 ## Run KII Chain Node Locally
 
