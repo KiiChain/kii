@@ -4,11 +4,17 @@
 ## Prerequisites
 ```
 Node 18+
+
 Go 1.19
+
 bison (on the OS level)
+
 build-essential (on the OS level)
+
 jq (on the OS level)
-Ignite CLI (https://docs.ignite.com/welcome/install)
+
+Ignite CLI v0.27.1
+(curl https://get.ignite.com/cli@v0.27.1! | bash)
 ```
 ## Run KII Node for Testnet
 ```shell
