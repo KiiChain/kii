@@ -2,24 +2,34 @@ version: 1
 accounts:
 - name: private_sale
   coins: [ 54000000000000tkii ]
+  mnemonic: lemon shy remain mind swim boring radio olympic nose come club approve make twenty fiber alley finger sentence upgrade salad jelly blast often mesh
 - name: public_sale
   coins: [ 126000000000000tkii ]
+  mnemonic: project pilot wall verb ranch dust mouse garbage chalk allow multiply repeat short surge gas ahead crane bleak elevator dice slab mammal oak december
 - name: liquidity
   coins: [ 180000000000000tkii ]
+  mnemonic: swallow mix caution glimpse leisure surface galaxy space damp recall give lift mesh common supply first favorite candy unveil race venture sniff velvet lawn
 - name: community_development
   coins: [ 180000000000000tkii ]
+  mnemonic: identify reward large damage swarm trap fantasy recall embrace extra project gather evoke invest amazing cluster refuse broccoli issue prize teach myth skate fuel
 - name: team
   coins: [ 356000000000000tkii ]
+  mnemonic: frame album width boring chat beauty program luxury blush census over video around crush obvious roof era chat receive gossip limb circle biology swim
 - name: rewards
   coins: [ 900000000000000tkii ]
+  mnemonic: cook neglect bone sock forest snap occur remember crop tobacco shell border toilet timber yard oxygen coral sentence wink urban sphere ozone rapid save
 - name: kiiventadorwallet
   coins: [ 1000000000000tkii ]
+  mnemonic: already hard smoke topic prepare filter coyote odor among meadow final coast sudden lava ladder arrest witness daughter soccer demand captain extend decade ankle
 - name: kiiferrari458wallet
   coins: [ 1000000000000tkii ]
+  mnemonic: select unlock tiger another ride cattle custom alley essence hunt glow humor fatal manage guard cancel topic arrange loan brick video knife close twenty
 - name: kiiuruswallet
   coins: [ 1000000000000tkii ]
+  mnemonic: skull cloud beyond main nice body amateur inhale group custom report rhythm snake oven hammer nation enlist catch right crucial such there veteran try
 - name: kiipaganiwallet
   coins: [ 1000000000000tkii ]
+  mnemonic: mountain card lottery taxi near crisp whisper walnut unaware joke first hold swift castle album fruit police then final scorpion erode tell reason staff
 genesis:
   chain_id: kiiventador
   app_state:
