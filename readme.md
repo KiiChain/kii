@@ -81,6 +81,8 @@ Reach out to the Kii Team on discord and request for some test tkii tokens sent 
 
 Once you have the tokens in your address, in a separate terminal on the machine you're running your node on, execute the following command:
 
+NOTE: You need to wait for your node to catch up to the current blockchain height first. Once it's caught up, you can execute the create validator command. To execute this command, you will need test kii coins from our discord faucet.
+
 ```
 kiichaind tx staking create-validator \
   --amount=1tkii \
