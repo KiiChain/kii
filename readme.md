@@ -102,8 +102,90 @@ Once the command is broadcasted successfully, the node should now be classified 
 ## Have your validator show up in the block explorer
 For your validator to show up on the block explorer: https://app.kiiglobal.io/kii/staking
 
-You will need to assign a domain name to your validator and ensure you enable HTTPS traffic for both port 1317 and 26657.
-See more information about setting up app.toml and config.toml here: https://github.com/ping-pub/explorer/blob/master/installation.md
+You will need this set up on your node server:
+1) nginx
+2) self-signed certificates (or purchased certificates from domain)
+3) open inbound connection on port 443 and 26658 in your firewall (if you're on a cloud provider, you can normally do this through network security group)
+4) signed up for a domain name for your validator
+
+If you are using self signed certificates, you can use cerbot to automatically generate self-signed certificates for you: https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal
+(NOTE: on step 6, ensure you select the `sudo certbot --nginx` option since we want to get the certificates and also install them in your nginx installation on your server).  Follow the prompts, it will eventually ask you for your domain name.  You need to provide a VALID domain name otherwise this will not work.
+
+Once you've ensured all 4 items have been set up on your server, modify the nginx configuration file (no extension) in:
+```
+/etc/nginx/sites-available/default
+/etc/nginx/sites-enabled/default
+```
+If there are no default files in those directories, create a file for each of the directory called `default`.
+In both the files, add the following content:
+
+Note: you will need to change the follow:
+`YOUR_DOMAIN_WITHOUT_THE_PROTOCOL - your domain name without the protocol.  For example, mydomain.com`
+
+`PATH_TO_FULLCHAIN_CERTIFICATE - path to your ssl certificates.  Ensure this is the full chain for your certificates (including root).  There are many guides out there on how to combine your certificates if they come separately)`
+
+`PATH_TO_CERTIFICATE_KEY - path to your certificate private key`
+
+```
+upstream lcd_url {
+    server 127.0.0.1:1317;
+}
+upstream rpc_url {
+    server 127.0.0.1:26657;
+}
+
+server  {
+    listen                       443 ssl;
+    server_name                  YOUR_DOMAIN_WITHOUT_THE_PROTOCOL;
+    ssl_certificate              PATH_TO_FULLCHAIN_CERTIFICATE/fullchain.pem;
+    ssl_certificate_key          PATH_TO_CERTIFICATE_KEY/privkey.pem;
+    ssl_session_cache            builtin:1000  shared:SSL:10m;
+    ssl_protocols                TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers                  HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+    ssl_prefer_server_ciphers    on;
+    access_log                   /var/log/nginx/access.log;
+    error_log                    /var/log/nginx/error.log;
+    location / {
+
+#                add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Max-Age 3600;
+        add_header Access-Control-Expose-Headers Content-Length;
+        proxy_pass                          http://lcd_url;
+        proxy_read_timeout                  90;
+    }
+
+}
+server  {
+    listen                       26658 ssl;
+    server_name                  YOUR_DOMAIN_WITHOUT_THE_PROTOCOL;
+    ssl_certificate              PATH_TO_FULLCHAIN_CERTIFICATE/fullchain.pem;
+    ssl_certificate_key          PATH_TO_CERTIFICATE_KEY/privkey.pem;
+    ssl_session_cache            builtin:1000  shared:SSL:10m;
+    ssl_protocols                TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers                  HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+    ssl_prefer_server_ciphers    on;
+    access_log                   /var/log/nginx/access.log;
+    error_log                    /var/log/nginx/error.log;
+    location / {
+proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header                    Host $host;
+            proxy_set_header                    X-Real-IP $remote_addr;
+            proxy_set_header                    X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_http_version 1.1;
+            proxy_bind                          $server_addr;
+            proxy_pass                          http://rpc_url;
+            proxy_read_timeout                90;
+    }
+
+}
+```
+
+Once you've set up both `default` files, save them then restart nginx `sudo systemctl restart nginx`.
+Test your setup by visiting your browsers with the urls:
+
+`https://YOUR_DOMAIN` - this should lead to a swagger API implementation of endpoints available on your node
+`https://YOUR_DOMAIN:26658` - this should lead to a page with all the rpc available endpoints on your node
 
 ## Run KII Chain Node Locally
 
