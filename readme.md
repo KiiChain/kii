@@ -119,7 +119,7 @@ Once you've ensured all 4 items have been set up on your server, modify the ngin
 If there are no default files in those directories, create a file for each of the directory called `default`.
 In both the files, add the following content:
 
-Note: you will need to change the follow:
+Note: you will need to change the following:
 ```
 YOUR_DOMAIN_WITHOUT_THE_PROTOCOL - your domain name without the protocol.  For example, mydomain.com
 
@@ -186,8 +186,24 @@ proxy_set_header Upgrade $http_upgrade;
 Once you've set up both `default` files, save them then restart nginx `sudo systemctl restart nginx`.
 Test your setup by visiting your browsers with the urls:
 
-`https://YOUR_DOMAIN` - this should lead to a swagger API implementation of endpoints available on your node
-`https://YOUR_DOMAIN:26658` - this should lead to a page with all the rpc available endpoints on your node
+```
+https://YOUR_DOMAIN - this should lead to a swagger API implementation of endpoints available on your node
+https://YOUR_DOMAIN:26658 - this should lead to a page with all the rpc available endpoints on your node
+```
+
+You should now also see your validator in https://app.kiiglobal.io/kii/staking
+
+## What if I can't see my validator on the explorer after enabling SSL?
+To debug this issue, ensure the following:
+
+1) you've executed the `create-validator` command without any errors and ensured that your node IS a validator
+2) you've tested your domain on the browser and it shows properly
+```
+https://YOUR_DOMAIN - this should lead to a swagger API implementation of endpoints available on your node
+https://YOUR_DOMAIN:26658 - this should lead to a page with all the rpc available endpoints on your node
+```
+3) your validator is not jailed.  If it is jailed, you can unjail your validator by executing the following command:
+   `kiichaind tx slashing unjail --from=<your_validator_account_name> --chain-id=kiiventador`
 
 ## Run KII Chain Node Locally
 
