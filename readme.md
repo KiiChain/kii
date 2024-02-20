@@ -120,11 +120,13 @@ If there are no default files in those directories, create a file for each of th
 In both the files, add the following content:
 
 Note: you will need to change the follow:
-`YOUR_DOMAIN_WITHOUT_THE_PROTOCOL - your domain name without the protocol.  For example, mydomain.com`
+```
+YOUR_DOMAIN_WITHOUT_THE_PROTOCOL - your domain name without the protocol.  For example, mydomain.com
 
-`PATH_TO_FULLCHAIN_CERTIFICATE - path to your ssl certificates.  Ensure this is the full chain for your certificates (including root).  There are many guides out there on how to combine your certificates if they come separately)`
+PATH_TO_FULLCHAIN_CERTIFICATE - path to your ssl certificates.  Ensure this is the full chain for your certificates (including root).  There are many guides out there on how to combine your certificates if they come separately)
 
-`PATH_TO_CERTIFICATE_KEY - path to your certificate private key`
+PATH_TO_CERTIFICATE_KEY - path to your certificate private key
+```
 
 ```
 upstream lcd_url {
