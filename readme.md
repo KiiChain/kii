@@ -47,4 +47,4 @@ Requirements:
 3) install NGINX on the node server
 4) open inbound connection on port 443 and 26658 in your firewall (if you're on a cloud provider, you can normally do this through network security group)
 ```
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/k4cFlFxU6nE/0.jpg)](http://www.youtube.com/watch?v=k4cFlFxU6nE "Convert Node into Validator - Step 2")
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/dsgySMaGJAw/0.jpg)](http://www.youtube.com/watch?v=dsgySMaGJAw "Enable SSL on your node - Step 3")
